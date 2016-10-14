@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Controller : MonoBehaviour {
 	
@@ -14,7 +15,6 @@ public class Controller : MonoBehaviour {
 	private float offsetZ = 5.0f;
 	private static int score;
 	private static int lives;
-	private static int enemies = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -25,7 +25,7 @@ public class Controller : MonoBehaviour {
 
 		Vector3 startPos = targetPrefab.transform.position;
 		Vector3 pos = Vector3.zero;
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 6; i++) {
 			TargetScript target;
 
 			if (i == 0) {
@@ -34,8 +34,8 @@ public class Controller : MonoBehaviour {
 				target = Instantiate (targetPrefab) as TargetScript;
 			}
 
-			float posX = (offsetX * i) + startPos.x;
-			target.transform.position = new Vector3 (posX, startPos.y, startPos.z);
+			float posZ = -(offsetX * i) + startPos.z;
+			target.transform.position = new Vector3 (startPos.x, startPos.y, posZ);
 		}
 
 		scoreText.text = "Score: " + score;
@@ -48,8 +48,13 @@ public class Controller : MonoBehaviour {
 			loseGame.Open ();
 		}
 
-		if(enemies <= 0){
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+		if(enemies.Length <= 0){
 			winGame.Open ();
+		}
+
+		if(Input.GetKeyDown(KeyCode.Return)){
+			SceneManager.LoadScene ("Level1");
 		}
 	}
 
@@ -60,8 +65,5 @@ public class Controller : MonoBehaviour {
 	public static void setLives(int newLives){
 		lives = newLives;
 	}
-
-	public static void enemyKilled(){
-		enemies -= 1;
-	}
+		
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class EnemyBullet : MonoBehaviour {
-	public float speed = 10f;
+	public float speed = 12f;
 	private GameObject scoreObject;
 	private Text livesText;
 
@@ -16,7 +16,17 @@ public class EnemyBullet : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		Vector3 pos = transform.position;
-		pos.z += speed * Time.deltaTime;
+		Debug.Log (transform.eulerAngles.y);
+		if (transform.eulerAngles.y > 89 && transform.eulerAngles.y < 91) {
+			pos.x += speed * Time.deltaTime;
+		} else if (transform.eulerAngles.y > 170 && transform.eulerAngles.y < 181) {
+			pos.z -= speed * Time.deltaTime;
+		} else if (transform.eulerAngles.y > 269 && transform.eulerAngles.y < 271) {
+			pos.x -= speed * Time.deltaTime;
+		} else {
+			pos.z += speed * Time.deltaTime;
+		}
+
 		transform.position = pos;
 	}
 

@@ -10,28 +10,50 @@ public class MovingEnemy : MonoBehaviour {
 	private float chanceToChangeDirection = 0.03f;
 	private Vector3 maxPos;
 	private Vector3 minPos;
+	private bool inX;
 
 	// Use this for initialization
 	void Start () {
 		Vector3 initPos = transform.position;
 		maxPos = initPos;
 		minPos = initPos;
-		maxPos.x = initPos.x + range;
-		minPos.x = initPos.x - range;
+
+		if(transform.eulerAngles.y == 90 || transform.eulerAngles.y == 270){
+			maxPos.z = initPos.z + range;
+			minPos.z = initPos.z - range;
+			inX = false;
+		} else {
+			maxPos.x = initPos.x + range;
+			minPos.x = initPos.x - range;
+			inX = true;
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		Vector3 pos = transform.position;
-		pos.x += speed * (Time.deltaTime / 2);
-		transform.position = pos;
+		if (inX) {
+			pos.x += speed * (Time.deltaTime / 2);
+			transform.position = pos;
 
-		if(pos.x >= maxPos.x){
-			speed = -speed;
-		}
+			if (pos.x >= maxPos.x && speed > 0) {
+				speed = -speed;
+			}
 
-		if (pos.x <= minPos.x) {
-			speed = -speed;
+			if (pos.x <= minPos.x && speed < 0) {
+				speed = -speed;
+			}
+		} else {
+			pos.z += speed * (Time.deltaTime / 2);
+			transform.position = pos;
+
+			if (pos.z >= maxPos.z && speed > 0) {
+				speed = -speed;
+			}
+
+			if (pos.z <= minPos.z && speed < 0) {
+				speed = -speed;
+			}
 		}
 	}
 
