@@ -34,4 +34,5 @@ public class FPSInput : MonoBehaviour {
         movement = transform.TransformDirection(movement);
         charController.Move(movement);
     }
+		
 }

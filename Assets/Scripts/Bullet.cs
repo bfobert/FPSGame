@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class Bullet : MonoBehaviour {
+	public float speed = 10f;
 
 	// Use this for initialization
 	void Start () {
@@ -10,10 +11,18 @@ public class Bullet : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 
 	public void Remove(){
+		Destroy (this.gameObject);
+	}
+
+	void OnCollisionEnter(Collision col){
+		GameObject obj = col.gameObject;
+		if(obj.tag == "Enemy"){
+			Controller.enemyKilled ();
+		}
 		Destroy (this.gameObject);
 	}
 }

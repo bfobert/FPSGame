@@ -14,9 +14,8 @@ public class RayShooter : MonoBehaviour {
 
     void Update() {
         if (Input.GetMouseButtonDown(0)) {
-            Vector3 origin = new Vector3(camera.pixelWidth / 2,
-                                 camera.pixelHeight / 2,
-                                 0);
+            Vector3 origin = new Vector3(camera.pixelWidth / 2,camera.pixelHeight / 2,0);
+			Vector3 pos = transform.position;
             Ray ray = camera.ScreenPointToRay(origin);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit)) {
@@ -30,7 +29,7 @@ public class RayShooter : MonoBehaviour {
         bullet.transform.position = position;
         bullet.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
         yield return new WaitForSeconds(1);
-		bullet.Remove();
+//		bullet.Remove();
     }
 
 }
